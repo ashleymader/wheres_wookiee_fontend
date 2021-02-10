@@ -2,11 +2,55 @@
 <html lang="en" dir="ltr">
     <head>
         <meta charset="utf-8">
-        <script type="text/javascript" src="index.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="js/ios-orientationchange-fix.min.js"></script>
         <title>Where's Wookiee</title>
+
+        <style>
+            h1 {
+		        font-size: 20px;
+	        }
+	        div {
+		        width: 100%;
+	        }
+	        img[usemap] {
+		        border: none;
+		        height: auto;
+		        max-width: 100%;
+		        width: auto;
+	        }
+        </style>
     </head>
 
     <body>
-        
+        <div>
+            <h1>Where's Wookiee</h1>
+            <p>Find wookiee, waldo, walenda, the bad guy and wizard</p>
+
+            <img src="assets/scenes/space.png"  alt="" usemap="#spacemap" height="1440" width="3440"/> 
+
+            <map name="spacemap">
+              <area target="_blank" alt="Wookiee" title="wookiee" href="" coords="2249, 1054, 2281, 1200" shape="rect"/>
+              <area target="_blank" alt="Waldo" title="waldo" href="" coords="1374,906,1405,966" shape="rect">
+              <area target="_blank" alt="Wenda" title="wenda" href="" coords="1002,670,1024,731" shape="rect">
+              <area target="_blank" alt="Outlaw" title="outlaw" href="" coords="225,1056,264,1118" shape="rect">
+              <area target="_blank" alt="Wizard" title="wizard" href="" coords="2670,797,2697,868" shape="rect"
+            </map>
+        </div>
+
+
+
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script src="js/jquery.rwdImageMaps.js"></script>
+        <script src="js/index.js"> </script>
+        <script>
+            $(document).ready(function(e) {
+             $('img[usemap]').rwdImageMaps();
+             
+             $('area').on('click', function() {
+              alert($(this).attr('alt') + ' clicked');
+             });
+            });
+        </script>
     </body>
 </html>
