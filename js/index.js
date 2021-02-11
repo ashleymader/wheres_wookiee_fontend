@@ -1,19 +1,26 @@
-// document.addEventListener('DOMContentLoaded', () => {
-    
-    
-//     // const photoContainer = document.getElementById("photo-container");
-//     // const topContainer = document.getElementById("top-container");
-//     // const timerButton = topContainer.querySelector("button"); //this is the fake button to start the timer
-//     // const footer = document.getElementById("footer");
-//     // const timerBar = document.getElementById("timer-buttons")
-//     //     // HEAD CSS STUFF
-//     // const head = document.querySelector("head")
+const gamesEndpoint = 'http://localhost:3000/api/v1/games'
+const playersEndpoint = 'http://localhost:3000/api/v1/players'
 
-//     // function startGame() {
-//     //     photoContainer.innerHTML = sceneHTML
-//     // }
-   
-// });
+document.addEventListener('DOMContentLoaded', () => {
+    getGames()
+    
+});
+
+function getGames() {
+    fetch(gamesEndpoint)
+    .then(res => res.json())
+    .then(allGames => {
+        console.log(allGames)
+        allGames.data.forEach(game => {
+            const gameMarkup = `
+            <div data-id=${game.id}>
+                <h3>${game.attributes.player.username} - ${game.attributes.score} </h3>
+            </div>
+            `
+            document.querySelector('#games-container').innerHTML += gameMarkup
+        })
+    })
+}
 
 // function showCoords(event) {
 //     var x = event.clientX;
