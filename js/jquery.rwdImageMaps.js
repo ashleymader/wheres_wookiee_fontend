@@ -40,6 +40,7 @@
 						hPercent = $that.height()/100,
 						map = $that.attr('usemap').replace('#', ''),
 						c = 'coords';
+						
 
 					$('map[name="' + map + '"]').find('area').each(function() {
 						var $this = $(this);
@@ -61,7 +62,8 @@
 			});
 		};
 		$(window).resize(rwdImageMap).trigger('resize');
-
 		return this;
+		
 	};
+
 })(jQuery);

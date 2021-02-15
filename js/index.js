@@ -3,7 +3,18 @@ const playersEndpoint = 'http://localhost:3000/api/v1/players'
 
 document.addEventListener('DOMContentLoaded', () => {
     getGames()
-    
+    // console.log('DOC LOADED');
+    // console.log(wookiee.coords, 'doc load coords')
+});
+
+window.addEventListener('load', () => {
+    console.log('The page has fully loaded');
+    let areas = Array.from(document.querySelectorAll('area'))
+
+    let testWookiee = document.getElementsByTagName('area')[0]
+    testWookiee.onclick = function() {
+        console.log("WE DID IT")
+    }
 });
 
 function getGames() {
@@ -22,13 +33,11 @@ function getGames() {
     })
 }
 
-// function showCoords(event) {
-//     var x = event.clientX;
-//     var y = event.clientY;
-//     var coords = "X coords: " + x + ", Y coords: " + y;
-//     document.getElementById("demo").innerHTML = coords;
-// }
-// function image(objectClicked) {
-//     console.log(objectClicked);
-// }
+// areas = Array.from(document.querySelectorAll('area'))
+img = document.querySelector('.spacephoto')
+wookiee = document.getElementById('wookiee')
+
+// function characterArea() {areas.forEach(area => {console.log(area.alt, area.coords)})}
+
+
 
