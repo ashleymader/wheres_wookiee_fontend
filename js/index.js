@@ -1,23 +1,25 @@
 const gamesEndpoint = 'http://localhost:3000/api/v1/games'
 const playersEndpoint = 'http://localhost:3000/api/v1/players'
 const timerDisplay = document.querySelector('.display_time_left')
+const goButton = document.querySelector('#goButton')
+const startButton = document.querySelector("#startHere")
 
 
 document.addEventListener('DOMContentLoaded', () => {
-    getGames();
-    timer(90);
+    // timer(90);
 
+    
 });
 
 window.addEventListener('load', () => {
     console.log('The page has fully loaded');
     let areas = document.querySelectorAll('area')
-
+    
 
     }
 );
 
-function getGames() {
+function getHighScores() {
     fetch(gamesEndpoint)
     .then(res => res.json())
     .then(allGames => {
@@ -38,7 +40,7 @@ img = document.querySelector('.spacephoto')
 let score = 0 
 let username 
 let countdown 
-let characterClick = 0
+let characterClick = 0 //not sure if needed now that I'm removing the node on click
 
 
 img.addEventListener("click", e => { 
@@ -80,9 +82,9 @@ function timer(seconds) {
         }
 
         if (characterCount === 5) {
-            score+= secondsLeft * 10
+            score+= secondsLeft * 10 //bonus score for finding all characters with time remaining
             updateScore()
-            clearInterval(countdown)
+            clearInterval(countdown) 
             timerDisplay.innerHTML = `<div> CONGRATULATIONS! </div>`
             return;
         }
@@ -101,12 +103,63 @@ function displayTimeLeft(seconds) {
 
 //score
 const scoreDisplay = document.querySelector('.score')
+
+function resetScore() {
+    score = 0;
+    scoreDisplay.innerHTML = `<h1>Score: ${score}</h1>`
+}
+
 function updateScore() {
     scoreDisplay.innerHTML = `<h1>Score: ${score}</h1>`
 }
 
-//beginModal
+
+//instructions and trigger start 
+goButton.addEventListener('click', e => { 
+    startButton.remove()
+    timer(90)
+
+})
+
+// img.addEventListener("click", e => { 
+//     if (e.target.localName === "area") {
+//         let characterID = e.target.id
+//         let targetCharacter = e.target
+//         let foundSound = new Audio()
+//         foundSound.src = "assets/sounds/confirmation.mp3"
+//         foundSound.play()
+
+//         targetCharacter.parentNode.removeChild(targetCharacter) //make user unable to click same character many times
+
+//         score+=100
+//         updateScore() 
+
+//         characterCount++
+
+//         // console.log(characterCount)
+//         if (characterCount === 5) {
+//             //PUT SOME METHOD HERE TO END GAME
+//         }
+//     }
+// })
+
+//endModal 
 
 
 
 
+//post users score to db 
+function postScore() {
+    let body = {
+      username: username,
+      score: score
+    }
+    return fetch(gamesEndpoint, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accepts": "application/json"
+      },
+      body: JSON.stringify(body)
+    }).then(resp => resp.json())
+  }

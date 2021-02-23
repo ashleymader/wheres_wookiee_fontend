@@ -5,11 +5,23 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!-- Latest compiled and minified CSS -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
+        <!-- jQuery library -->
+        <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+        <!-- Latest compiled JavaScript -->
+        <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
         <!-- jQuery library -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+        <!-- Popper JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
         <!-- Latest compiled JavaScript -->
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>-->
         <script src="js/ios-orientationchange-fix.min.js"></script>
 
         <link rel="stylesheet" href="styles.css/space.css" />
@@ -30,27 +42,57 @@
     </head>
 
     <body>
+
         
-        <div class="jumbotron text-center">
-            <h1>Where's Wookiee</h1>
-            <p>Find wookiee, waldo, wenda, the odlaw and wizard</p>
+        
+        <div class="jumbotron jumbotron-fluid text-center">
+            <div class="container">
+                <h1>Where's Wookiee</h1>
+                <p>Find wookiee, waldo, wenda, the odlaw and wizard</p>
+            </div>
+            
 
             <div class="display">
                 <h1 class="display_time_left"></h1>
             </div>
 
             <div class="score"></div>
-
-
         </div>
 
-        <div class -id="startScreen"> </div>
-        
-        <!-- <div class="display">
-            <h1 class="display_time_left"></h1>
-        </div> -->
-
-        
+        <!-- <div class="startScreen"> </div> -->
+        <!-- Button to Open the Modal -->
+            <button type="button" class="btn btn-primary" id="startHere" data-toggle="modal" data-target="#myModal">
+                Start here!
+            </button>
+            
+            <!-- The Modal -->
+            <div class="modal" id="myModal">
+                <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+            
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                    <h4 class="modal-title">Welcome to Where's Wookiee!</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+            
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                    <p>You are in search of the following characters</p>
+                    <img src="assets/characters/characters.png">
+                    <p>When you find a character, click on them. You better hurry before you run out of time! Find them all before times up and get bonus points!
+                    </p>
+                    </div>
+            
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" id="goButton" data-dismiss="modal">Get set, GO!</button>
+                    </div>
+            
+                </div>
+                </div>
+            </div>
+  
         <div class="imageContainer">
             <div class="spacephoto">
                 <img src="assets/scenes/space.png"  alt="" usemap="#spacemap" height="1440" width="3440"/> 
@@ -66,8 +108,10 @@
 
 
         <div id="games-container">
+            
         </div>
 
+        
 
 
 
@@ -80,10 +124,7 @@
         <script>
             $(document).ready(function(e) {
              $('img[usemap]').rwdImageMaps();
-        
             });
-            
         </script>
-                
     </body>
 </html>
