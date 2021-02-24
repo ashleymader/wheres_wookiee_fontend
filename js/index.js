@@ -3,7 +3,7 @@ const playersEndpoint = 'http://localhost:3000/api/v1/players'
 const timerDisplay = document.querySelector('.display_time_left')
 const goButton = document.querySelector('#goButton')
 const startButton = document.querySelector("#startHere")
-
+const endModalButton = document.querySelector("#submitScore")
 
 document.addEventListener('DOMContentLoaded', () => {
     // timer(90);
@@ -81,11 +81,12 @@ function timer(seconds) {
             return;
         }
 
-        if (characterCount === 5) {
+        if (characterCount === 1) {
             score+= secondsLeft * 10 //bonus score for finding all characters with time remaining
             updateScore()
             clearInterval(countdown) 
             timerDisplay.innerHTML = `<div> CONGRATULATIONS! </div>`
+            endGame()
             return;
         }
 
@@ -121,29 +122,47 @@ goButton.addEventListener('click', e => {
 
 })
 
-// img.addEventListener("click", e => { 
-//     if (e.target.localName === "area") {
-//         let characterID = e.target.id
-//         let targetCharacter = e.target
-//         let foundSound = new Audio()
-//         foundSound.src = "assets/sounds/confirmation.mp3"
-//         foundSound.play()
-
-//         targetCharacter.parentNode.removeChild(targetCharacter) //make user unable to click same character many times
-
-//         score+=100
-//         updateScore() 
-
-//         characterCount++
-
-//         // console.log(characterCount)
-//         if (characterCount === 5) {
-//             //PUT SOME METHOD HERE TO END GAME
-//         }
-//     }
-// })
 
 //endModal 
+function endGame() { 
+    let formModal = document.querySelector('#form')
+    function sendClick(){
+        document.querySelector('#sendClick').click()
+    }
+
+
+
+
+    formModal.innerHTML = `
+        <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">Please Enter A Username For The Leaderboard</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form>
+                <div class="modal-body">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" placeholder="Enter Username">
+                    </br>
+                    <label for="score">Your High Score: ${score} </label>
+                    <input type="hidden" id="text" value="${score}">
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </div>
+
+            </form>
+        </div>
+        </div> `
+
+        sendClick()
+    
+}
 
 
 

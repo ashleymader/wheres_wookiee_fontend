@@ -9,7 +9,7 @@
         <!-- jQuery library -->
         <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
         <!-- Latest compiled JavaScript -->
-        <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
         
         <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -21,14 +21,14 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 
         <!-- Latest compiled JavaScript -->
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>-->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <script src="js/ios-orientationchange-fix.min.js"></script>
 
         <link rel="stylesheet" href="styles.css/space.css" />
         <style>
-            h1 {
+            /* h1 {
 		        font-size: 20px;
-	        }
+	        } */
 	        div {
 		        width: 100%;
 	        }
@@ -45,35 +45,37 @@
 
         
         
-        <div class="jumbotron jumbotron-fluid text-center">
-            <div class="container">
+            <div class="jumbotron jumbotron-fluid text-center">
+                <div class="container"></div>
                 <h1>Where's Wookiee</h1>
-                <p>Find wookiee, waldo, wenda, the odlaw and wizard</p>
+                <div class="display">
+                    <h1 class="display_time_left"></h1>
+                </div>
+                <div class="score"></div> 
+
+                    
+                </div>
             </div>
-            
+        <!-- </div> -->
 
-            <div class="display">
-                <h1 class="display_time_left"></h1>
-            </div>
 
-            <div class="score"></div>
-        </div>
-
-        <!-- <div class="startScreen"> </div> -->
-        <!-- Button to Open the Modal -->
-            <button type="button" class="btn btn-primary" id="startHere" data-toggle="modal" data-target="#myModal">
-                Start here!
+            <!-- Button to Open the Start Modal -->
+            <button type="button" class="btn btn-danger btn-block" id="startHere" data-toggle="modal" data-target="#myModal">
+                START HERE! Press me for instructions
             </button>
-            
-            <!-- The Modal -->
-            <div class="modal" id="myModal">
+     
+            <!-- Button to submit score -->
+            <!-- <button type="button" class="btn btn-info btn-block" id="submitScore" data-toggle="modal" data-target="#endModal">Submit your score!</button> -->
+        
+            <!-- Start Modal -->
+            <div class="modal" id="myModal" data-backdrop="static">
                 <div class="modal-dialog modal-lg">
                 <div class="modal-content">
             
                     <!-- Modal Header -->
                     <div class="modal-header">
                     <h4 class="modal-title">Welcome to Where's Wookiee!</h4>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
                     </div>
             
                     <!-- Modal body -->
@@ -92,26 +94,58 @@
                 </div>
                 </div>
             </div>
-  
-        <div class="imageContainer">
-            <div class="spacephoto">
-                <img src="assets/scenes/space.png"  alt="" usemap="#spacemap" height="1440" width="3440"/> 
-                <map id="spacemap" name="spacemap">
-                <area alt="Wookiee" id="wookiee" title="wookiee" href="javascript:;" coords="2249,1054,2281,1200" shape="rect">
-                <area alt="Waldo" id="waldo" title="waldo" href="javascript:;" coords="1374,906,1405,966" shape="rect">
-                <area alt="Wenda" id="wenda" title="wenda" href="javascript:;" coords="1002,670,1024,731" shape="rect">
-                <area alt="Odlaw" id="odlaw" title="odlaw" href="javascript:;" coords="225,1056,264,1118" shape="rect">
-                <area alt="Wizard" id="wizard" title="wizard" href="javascript:;" coords="2670,797,2697,868" shape="rect" >
-                </map>
+
+
+            <button style="display:none" data-toggle="modal" data-target="#form" id="sendClick" type="button" class="btn btn-danger">Danger</button>
+
+                <div class="modal" id="form" data-backdrop="static">
+                    <!-- <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+
+                            <div class="modal-header">
+                                <h5 class="modal-title">Please Enter A Username For The Leaderboard</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <form>
+                                <div class="modal-body">
+                                    <label for="username">Username</label>
+                                    <input type="text" class="form-control" id="username" placeholder="Enter Username">
+
+                                    <label for="score">Your High Score: ${score} </label>
+                                    <input type="text" class="form-control" id="text" value="${score}">
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-success">Submit</button>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div> -->
+                </div>
+
+
+            <div class="imageContainer">
+                <div class="spacephoto">
+                    <img src="assets/scenes/space.png"  alt="" usemap="#spacemap" height="1440" width="3440"/> 
+                    <map id="spacemap" name="spacemap">
+                    <area alt="Wookiee" id="wookiee" title="wookiee" href="javascript:;" coords="2249,1054,2281,1200" shape="rect">
+                    <area alt="Waldo" id="waldo" title="waldo" href="javascript:;" coords="1374,906,1405,966" shape="rect">
+                    <area alt="Wenda" id="wenda" title="wenda" href="javascript:;" coords="1002,670,1024,731" shape="rect">
+                    <area alt="Odlaw" id="odlaw" title="odlaw" href="javascript:;" coords="225,1056,264,1118" shape="rect">
+                    <area alt="Wizard" id="wizard" title="wizard" href="javascript:;" coords="2670,797,2697,868" shape="rect" >
+                    </map>
+                </div>
             </div>
-        </div>
 
 
-        <div id="games-container">
-            
-        </div>
-
+            <div id="games-container">
+                
+            </div>
         
+
 
 
 
