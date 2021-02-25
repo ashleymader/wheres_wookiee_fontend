@@ -15,6 +15,10 @@ window.addEventListener('load', () => {
     console.log('The page has fully loaded');
     let areas = document.querySelectorAll('area')
     
+    function sendClick(){
+        document.querySelector('#sendFirstClick').click()
+    }
+    sendClick()
 
     }
 );
