@@ -8,7 +8,6 @@ const endModalButton = document.querySelector("#submitScore")
 document.addEventListener('DOMContentLoaded', () => {
     // timer(90);
 
-    
 });
 
 window.addEventListener('load', () => {
@@ -19,25 +18,10 @@ window.addEventListener('load', () => {
         document.querySelector('#sendFirstClick').click()
     }
     sendClick()
-
     }
 );
 
-function getHighScores() {
-    fetch(gamesEndpoint)
-    .then(res => res.json())
-    .then(allGames => {
-        console.log(allGames)
-        allGames.data.forEach(game => {
-            const gameMarkup = `
-            <div data-id=${game.id}>
-                <h3>${game.attributes.player.username} - ${game.attributes.score} </h3>
-            </div>
-            `
-            document.querySelector('#games-container').innerHTML += gameMarkup
-        })
-    })
-}
+
 let characterCount = 0
 let numOfCharacters = 5
 img = document.querySelector('.spacephoto')
@@ -121,9 +105,7 @@ function updateScore() {
 
 //instructions and trigger start 
 goButton.addEventListener('click', e => { 
-    startButton.remove()
     timer(90)
-
 })
 
 
@@ -133,9 +115,6 @@ function endGame() {
     function sendClick(){
         document.querySelector('#sendClick').click()
     }
-
-
-
 
     formModal.innerHTML = `
         <div class="modal-dialog">
@@ -147,13 +126,13 @@ function endGame() {
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form>
-                <div class="modal-body">
+            <form id="finalForm">
+                <div class="modal-body" >
                     <label for="username">Username:</label>
                     <input type="text" id="username" placeholder="Enter Username">
                     </br>
                     <label for="score">Your High Score: ${score} </label>
-                    <input type="hidden" id="text" value="${score}">
+                    <input type="hidden" id="score" value="${score}">
                 </div>
 
                 <div class="modal-footer">
@@ -164,7 +143,13 @@ function endGame() {
         </div>
         </div> `
 
-        sendClick()
+    sendClick()
+
+    //submit form with score and username
+    const finalForm = document.querySelector("#finalForm")
+    console.log(finalForm)
+    finalForm.addEventListener("submit", e => postScore(e))
+    
     
 }
 
@@ -172,17 +157,37 @@ function endGame() {
 
 
 //post users score to db 
-function postScore() {
-    let body = {
-      username: username,
-      score: score
-    }
-    return fetch(gamesEndpoint, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Accepts": "application/json"
-      },
-      body: JSON.stringify(body)
-    }).then(resp => resp.json())
+function postScore(e) {
+    e.preventDefault()
+    username = e.target.username.value
+    score = e.target.score.value
+    // let body = {
+    //   username: username,
+    //   score: score
+    // }
+    // return fetch(gamesEndpoint, {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     "Accepts": "application/json"
+    //   },
+    //   body: JSON.stringify(body)
+    // }).then(resp => resp.json())
   }
+
+  //show high scores 
+  function getHighScores() {
+    fetch(gamesEndpoint)
+    .then(res => res.json())
+    .then(allGames => {
+        console.log(allGames)
+        allGames.data.forEach(game => {
+            const gameMarkup = `
+            <div data-id=${game.id}>
+                <h3>${game.attributes.player.username} - ${game.attributes.score} </h3>
+            </div>
+            `
+            document.querySelector('#games-container').innerHTML += gameMarkup
+        })
+    })
+}
