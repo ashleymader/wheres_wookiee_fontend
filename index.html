@@ -91,6 +91,8 @@
     <button style="display:none" data-toggle="modal" data-target="#myModal" id="sendFirstClick" type="button" class="btn btn-danger">Danger</button>
     <!-- Button to Open the Form Modal (hidden and sendClick via JS)-->
     <button style="display:none" data-toggle="modal" data-target="#form" id="sendClick" type="button" class="btn btn-danger">Danger</button>
+    <!-- Button to open scoreboard modal  -->
+    <button style="display:none" data-toggle="modal" data-target="#games-container" id="scoreboardClick" type="button" class="btn btn-danger">Danger</button>
     <!-- Form sent via JS  -->
     <div class="modal" id="form" data-backdrop="static"></div>
 
@@ -108,7 +110,23 @@
         </div>
     </div>
 
-    <div id="games-container"></div>
+    <div class="modal" id="games-container" data-backdrop="static">
+            <div class="modal-dialog">
+            <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">Scoreboard</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="eachGameScore">
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" id="exitButton" class="btn btn-primary">Exit</button>
+            </div>
+    </div>
 
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <script src="js/jquery.rwdImageMaps.js"></script>

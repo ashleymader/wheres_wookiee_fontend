@@ -137,16 +137,13 @@ function updateScore() {
 //endModal 
 function endGame() { 
     let formModal = document.querySelector('#form')
-    function sendClick(){
-        document.querySelector('#sendClick').click()
-    }
 
     formModal.innerHTML = `
         <div class="modal-dialog">
         <div class="modal-content">
 
             <div class="modal-header">
-                <h5 class="modal-title">Please Enter A Username For The Leaderboard</h5>
+                <h5 class="modal-title">Submit Your Score to the Leaderboard</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -169,9 +166,8 @@ function endGame() {
         </div>
         </div> `
 
-    //activating hidden button for modal
-    sendClick()
-
+    //activating hidden button to open modal
+    document.querySelector('#sendClick').click()
 
     //submit form with score and username
     const finalForm = document.querySelector("#finalForm")
@@ -179,6 +175,7 @@ function endGame() {
     finalForm.addEventListener("submit", function(e){
         e.preventDefault()
         postScore()
+        getHighScores()
     })
 }
 
@@ -199,10 +196,10 @@ async function postScore() {
         body: JSON.stringify(body)
     });
     return await resp.json();
-  }
+}
 
   //show high scores 
-  function getHighScores() {
+function getHighScores() {
     fetch(gamesEndpoint)
     .then(res => res.json())
     .then(allGames => {
@@ -210,10 +207,18 @@ async function postScore() {
         allGames.data.forEach(game => {
             const gameMarkup = `
             <div data-id=${game.id}>
-                <h3>${game.attributes.player.username} - ${game.attributes.score} </h3>
-            </div>
+            <h3>${game.attributes.player.username} - ${game.attributes.score} </h3>
             `
-            document.querySelector('#games-container').innerHTML += gameMarkup
+            document.querySelector('#eachGameScore').innerHTML += gameMarkup
         })
+        //activating hidden button to open modal
+        document.querySelector('#scoreboardClick').click()
     })
 }
+
+//reset game after exit scoreboard 
+const exitButton = document.querySelector("#exitButton")
+exitButton.addEventListener('click', e => {
+    location.reload();
+    return false;
+})
