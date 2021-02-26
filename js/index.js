@@ -1,36 +1,67 @@
 const gamesEndpoint = 'http://localhost:3000/api/v1/games'
 const playersEndpoint = 'http://localhost:3000/api/v1/players'
 const timerDisplay = document.querySelector('.display_time_left')
-const goButton = document.querySelector('#goButton')
-const startButton = document.querySelector("#startHere")
-const endModalButton = document.querySelector("#submitScore")
+
+// const startButton = document.querySelector("#startHere")
+// const endModalButton = document.querySelector("#submitScore")
 
 document.addEventListener('DOMContentLoaded', () => {
-    // timer(90);
+
 
 });
 
 window.addEventListener('load', () => {
     console.log('The page has fully loaded');
     let areas = document.querySelectorAll('area')
-    
-    function sendClick(){
-        document.querySelector('#sendFirstClick').click()
-    }
-    sendClick()
+    document.querySelector('#sendFirstClick').click()
+
     }
 );
 
 
 let characterCount = 0
-let numOfCharacters = 5
+// let numOfCharacters = 5
 img = document.querySelector('.spacephoto')
 let score = 0 
 let username 
+let player_id
 let countdown 
 let characterClick = 0 //not sure if needed now that I'm removing the node on click
 
+//instruction modal/form - must click button to trigger start
+const startForm = document.querySelector("#userForm")
+startForm.addEventListener('submit', e => userFormHandler(e))
 
+//user form handler
+function userFormHandler(e) {
+    e.preventDefault()
+    username = e.target.username.value
+    postUser(username)
+}
+//send user to db
+function postUser(username) {
+
+    fetch(playersEndpoint, {
+        method: "POST", 
+        headers: {"Content-Type": "application/json"}, 
+        body: JSON.stringify({
+            username: username
+        })
+    })
+    .then(resp => resp.json())
+    .then(user => { 
+        player_id = user.data.id
+        username = user.data.attributes.username
+        console.log(player_id, username)
+    })
+}
+
+goButton.addEventListener('click', e => { 
+    document.querySelector('#sendFirstClick').click()
+    timer(90)
+})
+
+//listening for clicks on imageMap characters
 img.addEventListener("click", e => { 
     if (e.target.localName === "area") {
         let characterID = e.target.id
@@ -39,7 +70,7 @@ img.addEventListener("click", e => {
         foundSound.src = "assets/sounds/confirmation.mp3"
         foundSound.play()
 
-        targetCharacter.parentNode.removeChild(targetCharacter) //make user unable to click same character many times
+        targetCharacter.parentNode.removeChild(targetCharacter) //makes user unable to click same character many times
 
         score+=100
         updateScore() 
@@ -103,12 +134,6 @@ function updateScore() {
 }
 
 
-//instructions and trigger start 
-goButton.addEventListener('click', e => { 
-    timer(90)
-})
-
-
 //endModal 
 function endGame() { 
     let formModal = document.querySelector('#form')
@@ -128,11 +153,12 @@ function endGame() {
             </div>
             <form id="finalForm">
                 <div class="modal-body" >
-                    <label for="username">Username:</label>
-                    <input type="text" id="username" placeholder="Enter Username">
+                    <label for="username">Username: ${username}</label>
+                    <input type="hidden" id="username">
                     </br>
                     <label for="score">Your High Score: ${score} </label>
                     <input type="hidden" id="score" value="${score}">
+                    <input type="hidden" id="player_id" value="${player_id}">
                 </div>
 
                 <div class="modal-footer">
@@ -143,36 +169,36 @@ function endGame() {
         </div>
         </div> `
 
+    //activating hidden button for modal
     sendClick()
+
 
     //submit form with score and username
     const finalForm = document.querySelector("#finalForm")
-    console.log(finalForm)
-    finalForm.addEventListener("submit", e => postScore(e))
-    
-    
+    console.log(username, player_id, score)
+    finalForm.addEventListener("submit", function(e){
+        e.preventDefault()
+        postScore()
+    })
 }
 
 
 
-
-//post users score to db 
-function postScore(e) {
-    e.preventDefault()
-    username = e.target.username.value
-    score = e.target.score.value
-    // let body = {
-    //   username: username,
-    //   score: score
-    // }
-    // return fetch(gamesEndpoint, {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     "Accepts": "application/json"
-    //   },
-    //   body: JSON.stringify(body)
-    // }).then(resp => resp.json())
+// //post users score to db 
+async function postScore() {
+    let body = {
+      player_id: player_id,
+      score: score
+    }
+    const resp = await fetch(gamesEndpoint, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Accepts": "application/json"
+        },
+        body: JSON.stringify(body)
+    });
+    return await resp.json();
   }
 
   //show high scores 
