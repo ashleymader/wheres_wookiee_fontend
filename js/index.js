@@ -2,19 +2,13 @@ const gamesEndpoint = 'http://localhost:3000/api/v1/games'
 const playersEndpoint = 'http://localhost:3000/api/v1/players'
 const timerDisplay = document.querySelector('.display_time_left')
 
-// const startButton = document.querySelector("#startHere")
-// const endModalButton = document.querySelector("#submitScore")
-
 document.addEventListener('DOMContentLoaded', () => {
-
-
 });
 
 window.addEventListener('load', () => {
     console.log('The page has fully loaded');
     let areas = document.querySelectorAll('area')
     document.querySelector('#sendFirstClick').click()
-
     }
 );
 
@@ -52,7 +46,6 @@ function postUser(username) {
     .then(user => { 
         player_id = user.data.id
         username = user.data.attributes.username
-        console.log(player_id, username)
     })
 }
 
@@ -76,11 +69,6 @@ img.addEventListener("click", e => {
         updateScore() 
 
         characterCount++
-
-        // console.log(characterCount)
-        if (characterCount === 5) {
-            //PUT SOME METHOD HERE TO END GAME
-        }
     }
 })
 
@@ -171,49 +159,59 @@ function endGame() {
 
     //submit form with score and username
     const finalForm = document.querySelector("#finalForm")
-    console.log(username, player_id, score)
     finalForm.addEventListener("submit", function(e){
         e.preventDefault()
-        postScore()
+        postScore()  
         getHighScores()
     })
 }
 
 
 
-// //post users score to db 
-async function postScore() {
+//post users score to db 
+function postScore() {
     let body = {
       player_id: player_id,
       score: score
     }
-    const resp = await fetch(gamesEndpoint, {
+    fetch(gamesEndpoint, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
             "Accepts": "application/json"
         },
         body: JSON.stringify(body)
-    });
-    return await resp.json();
+    })
+    .then(resp => resp.json())
+    
+    .then(json => console.log(json, " this is the post"))
 }
+
 
   //show high scores 
 function getHighScores() {
-    fetch(gamesEndpoint)
-    .then(res => res.json())
-    .then(allGames => {
-        console.log(allGames)
-        allGames.data.forEach(game => {
-            const gameMarkup = `
-            <div data-id=${game.id}>
-            <h3>${game.attributes.player.username} - ${game.attributes.score} </h3>
-            `
-            document.querySelector('#eachGameScore').innerHTML += gameMarkup
+    setTimeout(function(){
+        fetch(gamesEndpoint)
+        .then(res => res.json())
+        .then(allGames => {
+            console.log(allGames, "this is the get")
+            allGames.data.forEach(game => {
+                const gameMarkup = `
+                <div data-id=${game.id}>
+                <h3>${game.attributes.player.username} - ${game.attributes.score} </h3>
+                `
+                document.querySelector('#eachGameScore').innerHTML += gameMarkup
+            })
         })
-        //activating hidden button to open modal
-        document.querySelector('#scoreboardClick').click()
-    })
+    }, 100)
+    postScoresToPage()
+}
+
+// I THINK I NEED TO PULL THE MARKUP OUT AN THEN MAKE ANOTHER FUNCTION FOR THE BUTTON THAT WAY I CAN SEE THE CURRENT USERS SCORE ON THE SCOREBOARD
+
+function postScoresToPage(){
+    //activating hidden button to open modal
+    document.querySelector('#scoreboardClick').click()
 }
 
 //reset game after exit scoreboard 
