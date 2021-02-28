@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 window.addEventListener('load', () => {
     console.log('The page has fully loaded');
-    let areas = document.querySelectorAll('area')
+    // let areas = document.querySelectorAll('area') dont need this right now
     document.querySelector('#sendFirstClick').click()
     }
 );
@@ -57,7 +57,7 @@ goButton.addEventListener('click', e => {
 //listening for clicks on imageMap characters
 img.addEventListener("click", e => { 
     if (e.target.localName === "area") {
-        let characterID = e.target.id
+        // let characterID = e.target.id -- may use this later 
         let targetCharacter = e.target
         let foundSound = new Audio()
         foundSound.src = "assets/sounds/confirmation.mp3"
@@ -85,10 +85,11 @@ function timer(seconds) {
         if (secondsLeft <= -1) {
             clearInterval(countdown)
             timerDisplay.innerHTML = `<div> GAME OVER </div>`
+            endGame()
             return;
         }
 
-        if (characterCount === 1) {
+        if (characterCount === 5) {
             score+= secondsLeft * 10 //bonus score for finding all characters with time remaining
             updateScore()
             clearInterval(countdown) 
@@ -163,6 +164,7 @@ function endGame() {
         e.preventDefault()
         postScore()  
         getHighScores()
+        
     })
 }
 
@@ -183,8 +185,6 @@ function postScore() {
         body: JSON.stringify(body)
     })
     .then(resp => resp.json())
-    
-    .then(json => console.log(json, " this is the post"))
 }
 
 
@@ -194,7 +194,6 @@ function getHighScores() {
         fetch(gamesEndpoint)
         .then(res => res.json())
         .then(allGames => {
-            console.log(allGames, "this is the get")
             allGames.data.forEach(game => {
                 const gameMarkup = `
                 <div data-id=${game.id}>
@@ -207,8 +206,7 @@ function getHighScores() {
     postScoresToPage()
 }
 
-// I THINK I NEED TO PULL THE MARKUP OUT AN THEN MAKE ANOTHER FUNCTION FOR THE BUTTON THAT WAY I CAN SEE THE CURRENT USERS SCORE ON THE SCOREBOARD
-
+//show all users and their scores
 function postScoresToPage(){
     //activating hidden button to open modal
     document.querySelector('#scoreboardClick').click()
