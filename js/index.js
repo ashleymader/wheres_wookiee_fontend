@@ -3,15 +3,16 @@ const playersEndpoint = 'http://localhost:3000/api/v1/players'
 const timerDisplay = document.querySelector('.display_time_left')
 
 document.addEventListener('DOMContentLoaded', () => {
+    document.querySelector('#sendFirstClick').click()
+    // document.querySelectorAll("demo").style.cursor = "default";
+
 });
 
 window.addEventListener('load', () => {
     console.log('The page has fully loaded');
     // let areas = document.querySelectorAll('area') dont need this right now
-    document.querySelector('#sendFirstClick').click()
     }
 );
-
 
 let characterCount = 0
 // let numOfCharacters = 5
@@ -23,7 +24,7 @@ let countdown
 let characterClick = 0 //not sure if needed now that I'm removing the node on click
 
 //instruction modal/form - must click button to trigger start
-const startForm = document.querySelector("#userForm")
+const startForm = document.querySelector("#userForm") 
 startForm.addEventListener('submit', e => userFormHandler(e))
 
 //user form handler
@@ -32,6 +33,7 @@ function userFormHandler(e) {
     username = e.target.username.value
     postUser(username)
 }
+
 //send user to db
 function postUser(username) {
 
@@ -49,6 +51,7 @@ function postUser(username) {
     })
 }
 
+//starting the game and clock
 goButton.addEventListener('click', e => { 
     document.querySelector('#sendFirstClick').click()
     timer(90)
@@ -162,13 +165,11 @@ function endGame() {
     const finalForm = document.querySelector("#finalForm")
     finalForm.addEventListener("submit", function(e){
         e.preventDefault()
+        // pleaseWork()
         postScore()  
-        getHighScores()
-        
+        setTimeout(getHighScores, 500);
     })
 }
-
-
 
 //post users score to db 
 function postScore() {
@@ -190,7 +191,7 @@ function postScore() {
 
   //show high scores 
 function getHighScores() {
-    setTimeout(function(){
+    // setTimeout(function(){
         fetch(gamesEndpoint)
         .then(res => res.json())
         .then(allGames => {
@@ -202,7 +203,7 @@ function getHighScores() {
                 document.querySelector('#eachGameScore').innerHTML += gameMarkup
             })
         })
-    }, 100)
+    // }, 100)
     postScoresToPage()
 }
 
