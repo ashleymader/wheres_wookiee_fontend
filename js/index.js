@@ -100,7 +100,7 @@ function timer(seconds) {
             endGame()
             return;
         }
-
+        
         displayTimeLeft(secondsLeft)
     }, 1000)
 }
@@ -165,9 +165,8 @@ function endGame() {
     const finalForm = document.querySelector("#finalForm")
     finalForm.addEventListener("submit", function(e){
         e.preventDefault()
-        // pleaseWork()
         postScore()  
-        setTimeout(getHighScores, 500);
+        setTimeout(getHighScores, 500)
     })
 }
 
@@ -191,7 +190,6 @@ function postScore() {
 
   //show high scores 
 function getHighScores() {
-    // setTimeout(function(){
         fetch(gamesEndpoint)
         .then(res => res.json())
         .then(allGames => {
@@ -203,7 +201,6 @@ function getHighScores() {
                 document.querySelector('#eachGameScore').innerHTML += gameMarkup
             })
         })
-    // }, 100)
     postScoresToPage()
 }
 
